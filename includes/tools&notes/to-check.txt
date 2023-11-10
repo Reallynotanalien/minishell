@@ -1,0 +1,10 @@
+
+To check if we handled correctly:
+- Ctrl+C, Ctrl+D && Ctrl+\
+
+To check after everything is pushed and we are ready for correction
+- Norminette
+- Make sure tools&notes is not in the repository
+- Test one last time
+- Delete all print_progress functions + printer.h + include in minishell.h 
+- Delete the added arg for the test Makefile

@@ -1,0 +1,72 @@
+TO-DO
+
+Week 1 - 18 au 24 septembre - Main loop (readline)
+- How to deal with NULL return from readline
+- How to deal with a non-accessible readline
+
+Week 2 - 25 septembre au 1er octobre - Signals && Gestion d'erreurs
+- Test Excel file audit to choose which test are the most relevant and add them to the test file
+
+- Debbuger (E -> K)
+- Testing Makefile (E -> K)
+
+Week 3 - 2 au 8 octobre - Tokenisation (learn about how tokenisation work and how it's used, decide on how to do the struct)
+- Research tokens
+- Decide on the way we want to separate the tokens
+- Parse the tokens (vérifier si absolute path, vérifier si fichier existe, si executable, les droits, etc. et mettre le flag approprié)
+- Static struct function to initiate, set to 0 and keep the main variables. (+ Add struct to .h)
+- Linked list functions
+
+- Static struct (E -> K)
+
+Week 4 - 9 au 15 octobre - Main parsing (here_doc, errors, environment correct, etc.)
+- Here doc 
+- Redirection-pipe dans le vide 
+- Guillemets non fermés
+
+- Heredoc (K -> E)
+
+Week 5 - 16 au 22 octobre - Execution (absolute path && builtins)
+- Absolute path
+- Builtins
+- Normale (pipe dup etc. genre pipex)
+- Redirection des input/ouput
+
+Week 6 - 23 au 29 octobre - Builtins 
+- env
+- cd 
+- echo
+- pwd
+- export
+- unset
+- exit (CtrlD)
+
+Week 7 - 30 octobre au 4 novembre - Tests tests tests!!
+
+IN PROGRESS
+- Functions description and research file (Élodie)
+- To test file (Élodie)
+- Printf flag (for debugging) (Katherine) - Just needs to optimize it
+- Vidéo LLDB (Élodie)
+- Exit + clean function (Cleans struct, prints message if necessary and exits) (Katherine)
+- Error flag (To catch errors before execution) (Katherine)
+- Add tests to the Makefile (Élodie)
+- Create test file (Élodie)
+
+DONE
+- Add minishell into the .gitignore file (Élodie)
+- Create a team in the intra (Katherine)
+- Separate all the .h to have one for each part of the project and one main one (Katherine)
+- To check file (Katherine)
+- Command history (add history, redisplay (might not need it), replace) tester si ça marche (Katherine)
+- Classement des fonctions autorisées + descriptions (Élodie)
+- Add DS_Store to the .gitignore file (Élodie) - DONE
+- .gitignore (E -> K)
+- Main project loop (K -> E)
+- Readline documentation (Élodie and Katherine)
+- Signals function (Katherine)
+- Handler CtrlC (Katherine)
+- Handler ou SIG_IGN CTRL\ (Katherine)
+- Decide on error management strategy
+- Transcrire le sujet + détails (Élodie)
+- Recherches sur les 4 fonctions en lien avec les signaux (Élodie && Katherine)

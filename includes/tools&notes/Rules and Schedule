@@ -1,0 +1,14 @@
+- Schedule -
+10am to 6pm
+Meeting at 10am (15 minutes) : Choose what we are working on from the to-do list
+Meeting at 12pm : Quick update, time for questions
+Meeting at 5pm : Questions time, explain code, add to to-do list
+
+
+
+- Rules -
+Commit regularly
+Free variables in the same function they were allocated in
+(if not part of the main struct)
+When allocating memory for a variable in the struct, update the cleanup function to free it appropriately.
+Push before going back home

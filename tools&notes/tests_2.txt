@@ -1,0 +1,30 @@
+test :
+bash :
+minishell :
+notes :
+
+
+test :		cat Desktop/to_do.txt ""  > test1
+bash :		cat: : No such file or directory
+Minishell :
+Leaks ?	:
+$? bash :
+$? minishell :
+notes :		empty quotes count as arguments and are handled by execve
+
+test bash :		cat 2.c | wc | v
+			>zsh: command not found: v
+			cat 2.c | wc | v | echo $?
+			>127
+			>zsh: command not found: v
+			cat 2.c | wc | v | echo $?
+			>0
+			>zsh: command not found: v
+minishell :
+notes :		$? is not a substitution for the last command's exit status, but for the last pipeline.
+
+tests bash :	export TEST1="'"Hi"'"
+				export TEST$TEST1=hi
+				>`TEST'Hi'=hi': not a valid identifier
+minishell :
+notes : ', ", $ and redirections cannot be used in environment variable names.

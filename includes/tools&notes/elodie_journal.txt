@@ -1,0 +1,127 @@
+----Most Recent----
+
+Doing :
+1 : fixing substitution Function (test everything + write down tests)
+
+To do next :
+Test how th git works
+Exit and clean functions
+Initiation struct et free
+
+Done :
+Added int exstat in struct (to be handled at execution)
+fixing substitution Function (Fixing variables beside one another ($USER$USER)), 
+	(add redirections as delimiters), (Handle correctly non-existing variable), (Make it so it changes use_data()->line_cpy)
+	(handle variables substituing other variables), (Handle $?)
+Created elodie-beta branch to safely work on do_substitutions
+Fixing git situation
+Remove whitespaces before and after str function
+Token_parsing function
+Create a line with only the necessary whitespaces, before tokenisation
+Verify if all quotes are closed (before tokenisation)
+
+To discuss :
+Added int exstat in struct (to be handled at execution)
+Git (malord)
+data->quote_flag : Useful ?
+data->error_flag : Defaults to 0 ? (For init) + Check Init !
+
+
+
+
+18/09
+Worked on pull requests
+Correct pipex
+Continue Allowed functions file
+
+To do next :
+Allowed functions file (descriptions)
+Study and understand readline 
+Study GIT
+Correct pipex
+
+To discuss (questions, ideas...): 
+
+09-19
+
+Done :
+Had pipex corrected
+Corrected CPP01
+Bouée de sauvetage
+
+To do next :
+Functions file
+
+To discuss :
+Begin with execution ? (easier for parsing)
+Codes d'erreur, return status
+
+if token starts with '/' '.', do not look through PATH. 
+Otherwise search through path (then access to see if it is an executable or not.) 
+If access does not find anything, check character in front to see if it is supposed to be a file
+
+Parse environment, formattage (unexistant infile, pipe leading nowhere, unclosed "....), error in execve 
+Make sure what we are doing is asked for, avoid unnecessary work
+
+09-21
+
+Done :
+
+To do next :
+
+To discuss :
+To do - Make a file to gather the project's requirements. (To help determine what is to be done and what isn't)
+
+09-22
+
+Done : 
+- .DS_Store file added to .gitignore
+
+To do next : 
+- Classement des fonctions autorisées + descriptions
+- Transcrire le sujet + détails 
+
+09-23/24
+
+Done :
+Function descriptions until isatty
+
+To do next :
+- Finish function descriptions
+- Transcrire le sujet
+
+
+To discuss :
+
+current working directory of a process affects the relative path
+Add #include <sys/types.h> #include <unistd.h> to .h (for stat function)
+When a string is returned by a function (ex : ttyname, strerror), it should be copied for storage and editing.
+
+Learn - 
+
+signals 
+- sigset_t object (sigemptyset)
+- signal set (sigemptyset)
+- struct sigaction (sigaction)
+
+Other :
+- Process group
+- struct stat (stat)
+- DIR structure (opendir)
+- struct dirent (readdir)
+- slot number (terminal)
+- ioctl operations
+- POSIX terminal I/O API
+- struct termios (tcsetattr)
+- termcap library (tgetent)
+
+09-29
+
+Done :
+Created 'elodie' branch
+Added protection in cleanup (created 'clean_data' function)
+
+
+To do next :
+
+To discuss :
