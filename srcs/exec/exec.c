@@ -27,9 +27,35 @@ void	execute_one_command(t_command **cmd, char **env)
 		}
 		execve((*cmd)->path, (char *const *)(*cmd)->cmd, env);
 		exit(0);
-		printf("Why is it printing, execve should have closed\n");
 	}
 	waitpid((*cmd)->pid, NULL, 0);
+}
+
+void	child(t_command **cmd, char **env)
+{
+	close((*cmd)->fd[0]);
+	close((*cmd)->outfile);
+	dup2((*cmd)->fd[1], STDOUT_FILENO);
+	close((*cmd)->fd[1]);
+	execve((*cmd)->path, (char *const *)(*cmd)->cmd, env);
+	exit(0);
+}
+
+void	pipex(t_command **cmd, char **env)
+{
+	if (pipe((*cmd)->fd) < 0)
+		printf("PIPE did not work\n");
+	(*cmd)->pid = fork();
+	if ((*cmd)->pid == -1)
+		printf("FORK did not work\n");
+	else if ((*cmd)->pid == 0)
+		child(cmd, env);
+	else
+	{
+		close((*cmd)->fd[1]);
+		dup2((*cmd)->fd[0], STDIN_FILENO);
+		close((*cmd)->fd[0]);
+	}
 }
 
 void	exec(t_command *cmd)
@@ -52,14 +78,25 @@ void	exec(t_command *cmd)
 		while (cmd && nb_cmds > 1)
 		{
 			get_path(cmd);
-			printf("Do pipex\n");
+			pipex(&cmd, use_data()->new_env);
 			nb_cmds--;
 			if (cmd->next)
 				cmd = cmd->next;
-			else
-				break ;
 		}
 		get_path(cmd);
-		printf("Execute last command\n");
+		if (pipe(cmd->fd) < 0)
+			printf("PIPE did not work\n");
+		cmd->pid = fork();
+		if (cmd->pid == -1)
+			printf("FORK did not work\n");
+		else if (cmd->pid == 0)
+		{
+			close(cmd->fd[0]);
+			close(cmd->fd[1]);
+			dup2(cmd->outfile, STDOUT_FILENO);
+			close(cmd->outfile);
+			execve(cmd->path, (char *const *)cmd->cmd, use_data()->new_env);
+		}
+		waitpid(cmd->pid, NULL, 0);
 	}
 }

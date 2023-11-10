@@ -46,6 +46,7 @@ typedef struct s_command
 	int					outfile;
 	int					builtin_flag;
 	int					pid;
+	int					fd[2];
 	char				*path;
 	char				**cmd;
 	struct s_command	*next;
