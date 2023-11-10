@@ -13,6 +13,25 @@ int	count_commands(t_command *cmd)
 	return (i);
 }
 
+void	execute_one_command(t_command **cmd, char **env)
+{
+	(*cmd)->pid = fork();
+	if ((*cmd)->pid == -1)
+		printf("FORK did not work\n");
+	else if ((*cmd)->pid == 0)
+	{
+		if ((*cmd)->outfile != STDOUT_FILENO)
+		{
+			dup2((*cmd)->outfile, STDOUT_FILENO);
+			close((*cmd)->outfile);
+		}
+		execve((*cmd)->path, (char *const *)(*cmd)->cmd, env);
+		exit(0);
+		printf("Why is it printing, execve should have closed\n");
+	}
+	waitpid((*cmd)->pid, NULL, 0);
+}
+
 void	exec(t_command *cmd)
 {
 	int	nb_cmds;
@@ -26,7 +45,7 @@ void	exec(t_command *cmd)
 	if (nb_cmds == 1)
 	{
 		get_path(cmd);
-		printf("Only one command to execute\n");
+		execute_one_command(&cmd, use_data()->new_env);
 	}
 	else
 	{
