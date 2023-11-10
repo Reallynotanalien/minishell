@@ -18,7 +18,11 @@ void	exec(t_command *cmd)
 	int	nb_cmds;
 
 	nb_cmds = count_commands(cmd);
-	dup2(cmd->infile, STDIN_FILENO);
+	if (cmd->infile != STDIN_FILENO)
+	{
+		dup2(cmd->infile, STDIN_FILENO);
+		close(cmd->infile);
+	}
 	if (nb_cmds == 1)
 	{
 		get_path(cmd);
