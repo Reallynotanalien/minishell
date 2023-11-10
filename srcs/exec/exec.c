@@ -17,7 +17,6 @@ void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
-	printf("I just added random text here to test the git repo\n");
 	nb_cmds = count_commands(cmd);
 	dup2(cmd->infile, STDIN_FILENO);
 	if (nb_cmds == 1)
