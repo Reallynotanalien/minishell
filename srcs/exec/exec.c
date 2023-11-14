@@ -22,6 +22,7 @@ void	child_two(t_command **cmd)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
+		use_data()->child = YES;
 		close(use_data()->fd[0]);
 		close(use_data()->fd[1]);
 		if ((*cmd)->outfile != STDOUT_FILENO)
@@ -33,6 +34,7 @@ void	child_two(t_command **cmd)
 	}
 	else
 	{
+		use_data()->child = NO;
 		close(use_data()->fd[0]);
 		close(use_data()->fd[1]);
 		waitpid(use_data()->pid, NULL, 0);
@@ -41,6 +43,7 @@ void	child_two(t_command **cmd)
 
 void	child_one(t_command **cmd)
 {
+	use_data()->child = YES;
 	close(use_data()->fd[0]);
 	close((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
@@ -64,6 +67,7 @@ void	pipex(t_command **cmd)
 		child_one(cmd);
 	else
 	{
+		use_data()->child = NO;
 		close(use_data()->fd[1]);
 		(*cmd)->next->infile = use_data()->fd[0];
 		close(use_data()->fd[0]);
@@ -78,11 +82,15 @@ void	exec(t_command *cmd)
 	while (cmd && nb_cmds > 1)
 	{
 		get_path(cmd);
+		if (ft_strcmp(cmd->cmd[0], "cat") == 0)
+			signal(SIGINT, cat_handler);
 		pipex(&cmd);
 		nb_cmds--;
 		if (cmd->next)
 			cmd = cmd->next;
 	}
 	get_path(cmd);
+	if (ft_strcmp(cmd->cmd[0], "cat") == 0)
+		signal(SIGINT, cat_handler);
 	child_two(&cmd);
 }

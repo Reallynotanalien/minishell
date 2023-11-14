@@ -75,6 +75,7 @@ typedef struct s_data
 	int					outfile;
 	int					fd[2];
 	int					pid;
+	int					child;
 	char				**new_env;
 	char				*line;
 	char				*line_cpy;
@@ -113,5 +114,7 @@ char		*access_path(t_command *cmd, char **path_env);
 char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
 void		get_path(t_command *cmd);
+
+void		cat_handler(int signum);
 
 #endif
