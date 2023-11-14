@@ -15,10 +15,10 @@ int	count_commands(t_command *cmd)
 
 void	execute_one_command(t_command **cmd, char **env)
 {
-	(*cmd)->pid = fork();
-	if ((*cmd)->pid == -1)
+	use_data()->pid = fork();
+	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
-	else if ((*cmd)->pid == 0)
+	else if (use_data()->pid == 0)
 	{
 		if ((*cmd)->outfile != STDOUT_FILENO)
 		{
@@ -26,35 +26,35 @@ void	execute_one_command(t_command **cmd, char **env)
 			close((*cmd)->outfile);
 		}
 		execve((*cmd)->path, (char *const *)(*cmd)->cmd, env);
-		exit(0);
+		// exit(0);
 	}
-	waitpid((*cmd)->pid, NULL, 0);
+	waitpid(use_data()->pid, NULL, 0);
 }
 
 void	child(t_command **cmd, char **env)
 {
-	close((*cmd)->fd[0]);
+	close(use_data()->fd[0]);
 	close((*cmd)->outfile);
-	dup2((*cmd)->fd[1], STDOUT_FILENO);
-	close((*cmd)->fd[1]);
+	dup2(use_data()->fd[1], STDOUT_FILENO);
+	close(use_data()->fd[1]);
 	execve((*cmd)->path, (char *const *)(*cmd)->cmd, env);
-	exit(0);
+	// exit(0);
 }
 
 void	pipex(t_command **cmd, char **env)
 {
-	if (pipe((*cmd)->fd) < 0)
+	if (pipe(use_data()->fd) < 0)
 		printf("PIPE did not work\n");
-	(*cmd)->pid = fork();
-	if ((*cmd)->pid == -1)
+	use_data()->pid = fork();
+	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
-	else if ((*cmd)->pid == 0)
+	else if (use_data()->pid == 0)
 		child(cmd, env);
 	else
 	{
-		close((*cmd)->fd[1]);
-		dup2((*cmd)->fd[0], STDIN_FILENO);
-		close((*cmd)->fd[0]);
+		close(use_data()->fd[1]);
+		dup2(use_data()->fd[0], STDIN_FILENO);
+		close(use_data()->fd[0]);
 	}
 }
 
@@ -84,19 +84,24 @@ void	exec(t_command *cmd)
 				cmd = cmd->next;
 		}
 		get_path(cmd);
-		if (pipe(cmd->fd) < 0)
+		if (pipe(use_data()->fd) < 0)
 			printf("PIPE did not work\n");
-		cmd->pid = fork();
-		if (cmd->pid == -1)
+		use_data()->pid = fork();
+		if (use_data()->pid == -1)
 			printf("FORK did not work\n");
-		else if (cmd->pid == 0)
+		else if (use_data()->pid == 0)
 		{
-			close(cmd->fd[0]);
-			close(cmd->fd[1]);
-			dup2(cmd->outfile, STDOUT_FILENO);
-			close(cmd->outfile);
+			close(use_data()->fd[0]);
+			close(use_data()->fd[1]);
+			if (cmd->outfile != STDOUT_FILENO)
+			{
+				dup2(cmd->outfile, STDOUT_FILENO);
+				close(cmd->outfile);
+			}
 			execve(cmd->path, (char *const *)cmd->cmd, use_data()->new_env);
 		}
-		waitpid(cmd->pid, NULL, 0);
+		close(use_data()->fd[0]);
+		close(use_data()->fd[1]);
+		waitpid(use_data()->pid, NULL, 0);
 	}
 }

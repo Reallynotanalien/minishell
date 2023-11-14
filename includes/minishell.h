@@ -74,6 +74,7 @@ typedef struct s_data
 	int					infile;
 	int					outfile;
 	int					fd[2];
+	int					pid;
 	char				**new_env;
 	char				*line;
 	char				*line_cpy;
