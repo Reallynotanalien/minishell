@@ -17,6 +17,12 @@ void	interruption_handler(int signum)
 	rl_redisplay();
 }
 
+void	cat_handler(int signum)
+{
+	(void) signum;
+	printf("");
+}
+
 /*Since we do not want the ^C characters to be echoed when we press Ctrl+C,
 the terminal's attributes are modified to mute this echo.
 If the SIGINT signal (Ctrl+C) is pressed, the interruption_handler

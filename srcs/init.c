@@ -11,6 +11,7 @@ void	init_data(t_data *data)
 	data->new_env = NULL;	//?cc50396d4ea740724d30bd3221e
 	data->line = NULL;
 	data->line_cpy = NULL;
+	data->child = NO;
 	// data->old_attributes;	//? (Is this allocated)
 	// data->new_attributes;	//? (Is this allocated)
 }

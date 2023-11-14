@@ -44,13 +44,6 @@ t_token	*command_loop(t_token *tokens, char **command)
 	return (tokens);
 }
 
-// void	open_pipe(void)
-// {
-// 	if (pipe(use_data()->fd) < 0)
-// 		printf("PIPE ERROR\n");
-// 	use_data()->outfile = use_data()->fd[1];
-// }
-
 void	build_commands(void)
 {
 	t_token	*tokens;
@@ -62,14 +55,9 @@ void	build_commands(void)
 	while (tokens)
 	{
 		command = NULL;
-		if (tokens->prev && tokens->prev->type == T_PIPE)
-			use_data()->infile = use_data()->fd[0];
-		else
-			use_data()->infile = STDIN_FILENO;
+		use_data()->infile = STDIN_FILENO;
 		use_data()->outfile = STDOUT_FILENO;
 		tokens = command_loop(tokens, &command);
-		if (tokens->type == T_PIPE)
-			printf("open pipe\n");
 		add_command(command, use_data()->infile, use_data()->outfile);
 		if (tokens->next)
 			tokens = tokens->next;
